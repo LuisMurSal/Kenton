@@ -1,4 +1,3 @@
-// src/pages/Dashboard.jsx
 export default function Dashboard() {
     return (
       <div className="p-6">
@@ -8,7 +7,14 @@ export default function Dashboard() {
           <Card title="Usuarios" link="/usuarios" description="Gestiona los usuarios del sistema" />
           <Card title="Clientes" link="/clientes" description="Visualiza, agrega o edita clientes" />
           <Card title="Productos" link="/productos" description="Administra tu inventario de productos" />
-          <Card title="Asignar productos" link="/asignar" description="Asigna productos a los clientes registrados" />
+          <Card title="Enviar PDF" link="/pdf" description="Genera y envía productos en PDF por email" />
+          <Card title="Usuarios" link="/usuarios" description="Gestiona los usuarios del sistema" />
+          <Card title="Clientes" link="/clientes" description="Visualiza, agrega o edita clientes" />
+          <Card title="Productos" link="/productos" description="Administra tu inventario de productos" />
+          <Card title="Enviar PDF" link="/pdf" description="Genera y envía productos en PDF por email" />
+          <Card title="Usuarios" link="/usuarios" description="Gestiona los usuarios del sistema" />
+          <Card title="Clientes" link="/clientes" description="Visualiza, agrega o edita clientes" />
+          <Card title="Productos" link="/productos" description="Administra tu inventario de productos" />
           <Card title="Enviar PDF" link="/pdf" description="Genera y envía productos en PDF por email" />
         </div>
       </div>
@@ -19,7 +25,7 @@ export default function Dashboard() {
     return (
       <a
         href={link}
-        className="block p-6 border rounded-lg shadow hover:shadow-md hover:bg-gray-50 transition duration-200"
+        className="block p-6 rounded-lg shadow hover:shadow-md hover:bg-gray-50 transition duration-200 border-gray-200 border"
       >
         <h2 className="text-xl font-semibold mb-2">{title}</h2>
         <p className="text-gray-600 text-sm">{description}</p>
