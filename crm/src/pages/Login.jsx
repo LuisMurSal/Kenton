@@ -10,7 +10,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (email === 'admin@gmail.com' && password === '123456') {
+    if (email === 'admin@admin.com' && password === '123456') {
       localStorage.setItem('token', 'token-falso')
       navigate('/')
     } else {
@@ -19,39 +19,54 @@ export default function Login() {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-8 border border-gray-300 rounded-lg shadow-lg bg-white">
-      <h2 className="text-2xl font-semibold mb-6 text-center">Iniciar sesión</h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="block mb-1 font-medium" htmlFor="email">Correo:</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        <div>
-          <label className="block mb-1 font-medium" htmlFor="password">Contraseña:</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        {error && <p className="text-red-600 text-sm">{error}</p>}
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors"
-        >
-          Ingresar
-        </button>
-      </form>
+    <div
+      className="min-h-screen flex flex-col justify-between bg-[#4f772d]"
+    >
+      {/* Contenedor de login */}
+      <div className="flex-grow flex items-center justify-center">
+        <div className="max-w-md w-full p-8 border border-gray-300 rounded-lg shadow-lg bg-[#dad7cd]">
+          <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Iniciar sesion</h2>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <input
+                id="email"
+                type="email"
+                placeholder="Correo"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoComplete='off'
+                className="w-full bg-transparent border-0 border-b-2 border-gray-400 focus:border-[#31572c] focus:outline-none py-2 placeholder-gray-600"
+              />
+            </div>
+            <div>
+              <input
+                id="password"
+                type="password"
+                placeholder="Contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete='off'
+                className="w-full bg-transparent border-0 border-b-2 border-gray-400 focus:border-[#31572c] focus:outline-none py-2 placeholder-gray-600"
+              />
+            </div>
+    {error && <p className="text-red-600 text-sm">{error}</p>}
+    <button
+      type="submit"
+      className="w-full bg-[#4f772d] text-white py-2 rounded-4xl hover:bg-[#31572c] transition-colors cursor-pointer"
+    >
+      Ingresar
+    </button>
+  </form>
+</div>
+
+      </div>
+
+      {/* Footer fijo al final */}
+      <footer className="text-center p-4 text-[#3a5a40] bg-[#dad7cd]">
+        © 2025 Poyecto CRM
+      </footer>
     </div>
   )
 }

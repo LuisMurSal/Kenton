@@ -1,6 +1,7 @@
 import { Outlet, Navigate, Link } from 'react-router-dom'
 import { useState } from 'react'
 import './index.css'
+import '../src/components/Sidebar'
 
 export default function App() {
   const token = localStorage.getItem('token')
