@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { Users, User, Box, Send } from 'lucide-react'
 
 export default function Dashboard() {
@@ -22,10 +23,18 @@ export default function Dashboard() {
 }
 
 function Card({ title, link, description, icon }) {
+  const navigate = useNavigate()
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    navigate(link)
+  }
+
   return (
     <a
       href={link}
-      className="block p-6 rounded-lg shadow hover:shadow-md hover:bg-gray-50 transition duration-200 border-gray-200 border bg-white"
+      onClick={handleClick}
+      className="block p-6 rounded-lg shadow hover:shadow-md hover:bg-gray-50 transition duration-200 border-gray-200 border bg-white cursor-pointer"
     >
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-xl font-semibold">{title}</h2>
