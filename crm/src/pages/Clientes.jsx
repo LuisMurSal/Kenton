@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Mail, User } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'  // <-- Importa useNavigate
 
 export default function Clientes() {
   const [clientes, setClientes] = useState([])
   const [form, setForm] = useState({ nombre: '', email: '', productos: [] })
   const [editIndex, setEditIndex] = useState(null)
   const [productosDisponibles, setProductosDisponibles] = useState([])
+
+  const navigate = useNavigate()  // <-- Inicializa navigate
 
   useEffect(() => {
     const storedClientes = JSON.parse(localStorage.getItem('clientes')) || []
@@ -50,7 +53,7 @@ export default function Clientes() {
   }
 
   const irAlCatalogo = () => {
-    window.location.href = '/productos'
+    navigate('/productos')  // Navega sin recargar
   }
 
   return (
@@ -58,7 +61,7 @@ export default function Clientes() {
       <h1 className="text-3xl font-bold text-[#4f772d]">Clientes</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4 bg-gray-50 p-6 rounded-xl shadow">
-        {/* Campo con icono de usuario */}
+        {/* Campos y botones igual */}
         <div className="flex items-center gap-2 border rounded border-gray-200 shadow bg-white px-2">
           <User className="text-gray-500" size={20} />
           <input
@@ -71,7 +74,6 @@ export default function Clientes() {
           />
         </div>
 
-        {/* Campo con icono de correo */}
         <div className="flex items-center gap-2 border rounded border-gray-200 shadow bg-white px-2">
           <Mail className="text-gray-500" size={20} />
           <input
@@ -95,9 +97,9 @@ export default function Clientes() {
                   key={producto.id}
                   onClick={() => toggleProducto(producto.id)}
                   className={`px-3 py-1 rounded border transition text-sm font-medium
-                  ${isSelected 
-                    ? 'bg-green-600 text-white border-green-700' 
-                    : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100 cursor-pointer'}
+                    ${isSelected 
+                      ? 'bg-green-600 text-white border-green-700' 
+                      : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100 cursor-pointer'}
                   `}
                 >
                   {producto.nombre}
