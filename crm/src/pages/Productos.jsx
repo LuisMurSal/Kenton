@@ -1,9 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Tag, FileText, DollarSign, Image } from 'lucide-react'
 
 export default function Productos() {
   const [productos, setProductos] = useState([])
   const [nuevo, setNuevo] = useState({ nombre: '', descripcion: '', precio: '', imagen: '' })
   const [editando, setEditando] = useState(null)
+
+  useEffect(() => {
+    const storedProductos = JSON.parse(localStorage.getItem('productos')) || []
+    setProductos(storedProductos)
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('productos', JSON.stringify(productos))
+  }, [productos])
 
   const handleInput = (e) => {
     const { name, value } = e.target
@@ -33,44 +43,59 @@ export default function Productos() {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-4">Productos</h1>
+      <h1 className="text-3xl font-bold mb-4 text-[#4f772d]">Productos</h1>
 
       {/* Formulario */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <input
-          name="nombre"
-          value={nuevo.nombre}
-          onChange={handleInput}
-          placeholder="Nombre"
-          className="border rounded px-3 py-2"
-        />
-        <input
-          name="descripcion"
-          value={nuevo.descripcion}
-          onChange={handleInput}
-          placeholder="Descripción"
-          className="border rounded px-3 py-2"
-        />
-        <input
-          name="precio"
-          type="number"
-          value={nuevo.precio}
-          onChange={handleInput}
-          placeholder="Precio"
-          className="border rounded px-3 py-2"
-        />
-        <input
-          name="imagen"
-          value={nuevo.imagen}
-          onChange={handleInput}
-          placeholder="URL de la imagen"
-          className="border rounded px-3 py-2"
-        />
+        <div className="flex items-center border rounded px-3 py-2 border-gray-300 shadow bg-white">
+          <Tag className="w-4 h-4 mr-2 text-gray-500" />
+          <input
+            name="nombre"
+            value={nuevo.nombre}
+            onChange={handleInput}
+            placeholder="Nombre"
+            className="w-full outline-none"
+          />
+        </div>
+
+        <div className="flex items-center border rounded px-3 py-2 border-gray-300 shadow bg-white">
+          <FileText className="w-4 h-4 mr-2 text-gray-500" />
+          <input
+            name="descripcion"
+            value={nuevo.descripcion}
+            onChange={handleInput}
+            placeholder="Descripción"
+            className="w-full outline-none"
+          />
+        </div>
+
+        <div className="flex items-center border rounded px-3 py-2 border-gray-300 shadow bg-white">
+          <DollarSign className="w-4 h-4 mr-2 text-gray-500" />
+          <input
+            name="precio"
+            type="number"
+            value={nuevo.precio}
+            onChange={handleInput}
+            placeholder="Precio"
+            className="w-full outline-none"
+          />
+        </div>
+
+        <div className="flex items-center border rounded px-3 py-2 border-gray-300 shadow bg-white">
+          <Image className="w-4 h-4 mr-2 text-gray-500" />
+          <input
+            name="imagen"
+            value={nuevo.imagen}
+            onChange={handleInput}
+            placeholder="URL de la imagen"
+            className="w-full outline-none"
+          />
+        </div>
       </div>
 
       <button
         onClick={editando ? guardarEdicion : agregarProducto}
-        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mb-8"
+        className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] mb-8 cursor-pointer"
       >
         {editando ? 'Guardar Cambios' : 'Agregar Producto'}
       </button>
@@ -78,7 +103,7 @@ export default function Productos() {
       {/* Tarjetas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {productos.map((producto) => (
-          <div key={producto.id} className="border rounded-lg shadow p-4 bg-white relative">
+          <div key={producto.id} className="border rounded-lg p-4 bg-white relative border-gray-300 shadow">
             <img
               src={producto.imagen || 'https://via.placeholder.com/150'}
               alt={producto.nombre}
@@ -91,13 +116,13 @@ export default function Productos() {
             <div className="mt-4 flex justify-between">
               <button
                 onClick={() => editarProducto(producto)}
-                className="text-sm text-blue-600 hover:underline"
+                className="px-3 py-1 text-sm bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition cursor-pointer"
               >
                 Editar
               </button>
               <button
                 onClick={() => eliminarProducto(producto.id)}
-                className="text-sm text-red-600 hover:underline"
+                className="px-3 py-1 text-sm bg-[#31572c] text-white rounded hover:bg-red-700 transition cursor-pointer"
               >
                 Eliminar
               </button>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Mail, User } from 'lucide-react'
 
 export default function Clientes() {
   const [clientes, setClientes] = useState([])
@@ -6,7 +7,6 @@ export default function Clientes() {
   const [editIndex, setEditIndex] = useState(null)
   const [productosDisponibles, setProductosDisponibles] = useState([])
 
-  // Cargar clientes y productos desde localStorage
   useEffect(() => {
     const storedClientes = JSON.parse(localStorage.getItem('clientes')) || []
     const storedProductos = JSON.parse(localStorage.getItem('productos')) || []
@@ -14,7 +14,6 @@ export default function Clientes() {
     setProductosDisponibles(storedProductos)
   }, [])
 
-  // Guardar en localStorage al cambiar clientes
   useEffect(() => {
     localStorage.setItem('clientes', JSON.stringify(clientes))
   }, [clientes])
@@ -51,46 +50,73 @@ export default function Clientes() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="space-y-8 p-6">
       <h1 className="text-3xl font-bold text-[#4f772d]">Clientes</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-xl shadow">
-        <input
-          type="text"
-          placeholder="Nombre"
-          className="w-full p-2 border rounded"
-          value={form.nombre}
-          onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full p-2 border rounded"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          required
-        />
+      <form onSubmit={handleSubmit} className="space-y-4 bg-gray-50 p-6 rounded-xl shadow">
+        {/* Campo con icono de usuario */}
+        <div className="flex items-center gap-2 border rounded border-gray-200 shadow bg-white px-2">
+          <User className="text-gray-500" size={20} />
+          <input
+            type="text"
+            placeholder="Nombre"
+            className="w-full p-2 bg-transparent focus:outline-none"
+            value={form.nombre}
+            onChange={(e) => setForm({ ...form, nombre: e.target.value })}
+            required
+          />
+        </div>
+
+        {/* Campo con icono de correo */}
+        <div className="flex items-center gap-2 border rounded border-gray-200 shadow bg-white px-2">
+          <Mail className="text-gray-500" size={20} />
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-2 bg-transparent focus:outline-none"
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            required
+          />
+        </div>
 
         <div>
           <h2 className="font-semibold mb-2">Asignar Productos</h2>
-          <div className="grid grid-cols-2 gap-2">
-            {productosDisponibles.map((producto) => (
-              <label key={producto.id} className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={form.productos.includes(producto.id)}
-                  onChange={() => toggleProducto(producto.id)}
-                />
-                <span>{producto.nombre}</span>
-              </label>
-            ))}
+          <div className="flex flex-wrap gap-2">
+            {productosDisponibles.map((producto) => {
+              const isSelected = form.productos.includes(producto.id)
+              return (
+                <button
+                  type="button"
+                  key={producto.id}
+                  onClick={() => toggleProducto(producto.id)}
+                  className={`px-3 py-1 rounded border transition text-sm font-medium
+                  ${isSelected 
+                    ? 'bg-green-600 text-white border-green-700' 
+                    : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100 cursor-pointer'}
+                  `}
+                >
+                  {producto.nombre}
+                </button>
+              )
+            })}
           </div>
         </div>
 
-        <button className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f]">
-          {editIndex !== null ? 'Actualizar Cliente' : 'Agregar Cliente'}
-        </button>
+        <div className="flex gap-4">
+          <button
+            type="submit"
+            className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] cursor-pointer"
+          >
+            {editIndex !== null ? 'Actualizar Cliente' : 'Agregar Cliente'}
+          </button>
+          <a
+            href="/productos"
+            className="bg-[#31572c] text-white px-4 py-2 rounded hover:bg-[#2a4b26] inline-flex items-center"
+          >
+            Catálogo de Productos
+          </a>
+        </div>
       </form>
 
       <div className="grid gap-4">
@@ -101,16 +127,16 @@ export default function Clientes() {
                 <h3 className="text-xl font-semibold">{cliente.nombre}</h3>
                 <p className="text-sm text-gray-600">{cliente.email}</p>
               </div>
-              <div className="space-x-2">
+              <div className="space-x-2 flex">
                 <button
-                  className="text-blue-600 hover:underline"
                   onClick={() => handleEdit(index)}
+                  className="px-3 py-1 text-sm bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition cursor-pointer"
                 >
                   Editar
                 </button>
                 <button
-                  className="text-red-600 hover:underline"
                   onClick={() => handleDelete(index)}
+                  className="px-3 py-1 text-sm bg-[#31572c] text-white rounded hover:bg-red-700 transition cursor-pointer"
                 >
                   Eliminar
                 </button>
