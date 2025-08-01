@@ -20,7 +20,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-[#4f772d]">
+    <div className="min-h-[100dvh] flex flex-col justify-between bg-[#4f772d]">
       {/* Contenedor de login */}
       <div className="flex-grow flex items-center justify-center">
         <div className="max-w-md w-full p-8 border border-gray-300 rounded-lg shadow-lg bg-white">
