@@ -24,7 +24,9 @@ export default function Login() {
       {/* Contenedor de login */}
       <div className="flex-grow flex items-center justify-center">
         <div className="max-w-md w-full p-8 border border-gray-300 rounded-lg shadow-lg bg-white">
-          <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Iniciar sesión</h2>
+          <h2 className="text-2xl mb-6 text-center text-gray-800 font-semibold">
+            Iniciar sesión
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             
             {/* Input correo con ícono */}
