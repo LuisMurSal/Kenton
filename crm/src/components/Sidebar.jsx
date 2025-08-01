@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import {
   LogOut,
@@ -15,6 +15,7 @@ import {
 
 export default function Sidebar({ isCollapsed, setIsCollapsed }) {
   const location = useLocation()
+  const navigate = useNavigate()
   const [active, setActive] = useState(location.pathname)
   const [isOpen, setIsOpen] = useState(false) // Solo en móvil
 
@@ -24,7 +25,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
-    window.location.href = '/login'
+    navigate('/login')
   }
 
   const linkStyle = (path) =>
