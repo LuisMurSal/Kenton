@@ -10,7 +10,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Snail
+  Snail,
+  UserPlus
 } from 'lucide-react'
 
 export default function Sidebar({ isCollapsed, setIsCollapsed }) {
@@ -102,6 +103,10 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
             <Link to="/clientes" className={linkStyle('/clientes')} onClick={() => setIsOpen(false)}>
               <Users className="w-5 h-5 flex-shrink-0" />
               {!isCollapsed && <span className="whitespace-nowrap">Clientes</span>}
+            </Link>
+            <Link to="/agregar-cliente" className={linkStyle('/agregar-cliente')} onClick={() => setIsOpen(false)}>
+              <UserPlus className="w-5 h-5 flex-shrink-0" /> {/* Cambia el ícono si prefieres otro */}
+              {!isCollapsed && <span className="whitespace-nowrap">Agregar Cliente</span>}
             </Link>
             <Link to="/productos" className={linkStyle('/productos')} onClick={() => setIsOpen(false)}>
               <Box className="w-5 h-5 flex-shrink-0" />

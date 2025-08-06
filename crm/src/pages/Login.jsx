@@ -12,7 +12,7 @@ export default function Login() {
     e.preventDefault()
 
     if (email === 'admin@admin.com' && password === '123456') {
-      localStorage.setItem('token', 'token-falso')
+      sessionStorage.setItem('token', 'token-falso')
       navigate('/')
     } else {
       setError('Correo o contraseña incorrectos')

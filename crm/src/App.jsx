@@ -4,7 +4,7 @@ import './index.css'
 import Sidebar from './components/Sidebar'
 
 export default function App() {
-  const token = localStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   if (!token) return <Navigate to="/login" />
