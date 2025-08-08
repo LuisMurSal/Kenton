@@ -36,35 +36,32 @@ export default function AgregarCliente() {
   return (
     <div className="space-y-8 p-6">
       <h1 className="text-3xl font-bold text-[#4f772d]">Agregar Cliente</h1>
-
       <form onSubmit={handleSubmit} className="space-y-4 bg-gray-50 p-6 rounded-xl shadow">
         <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-      <div className="flex items-center border-b-2 border-gray-300 focus-within:border-[#4f772d] transition">
-        <User className="text-gray-500 mr-2" size={20} />
-        <input
-          type="text"
-          className="w-full bg-transparent p-2 focus:outline-none"
-          value={form.nombre}
-          onChange={(e) => setForm({ ...form, nombre: e.target.value })}
-        />
-      </div>
-    </div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+          <div className="flex items-center border-b-2 border-gray-300 focus-within:border-[#4f772d] transition">
+            <User className="text-gray-500 mr-2" size={20} />
+            <input
+              type="text"
+              className="w-full bg-transparent p-2 focus:outline-none"
+              value={form.nombre}
+              onChange={(e) => setForm({ ...form, nombre: e.target.value })}
+            />
+          </div>
+        </div>
     
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1 mt-4">Email</label>
-      <div className="flex items-center border-b-2 border-gray-300 focus-within:border-[#4f772d] transition">
-        <Mail className="text-gray-500 mr-2" size={20} />
-        <input
-          type="email"
-          className="w-full bg-transparent p-2 focus:outline-none"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-      </div>
-    </div>
-
-
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1 mt-4">Email</label>
+          <div className="flex items-center border-b-2 border-gray-300 focus-within:border-[#4f772d] transition">
+            <Mail className="text-gray-500 mr-2" size={20} />
+            <input
+              type="email"
+              className="w-full bg-transparent p-2 focus:outline-none"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+            />
+          </div>
+        </div>
         <div>
           <h2 className="font-semibold mb-2">Asignar Productos</h2>
           <div className="flex flex-wrap gap-2">
@@ -86,7 +83,6 @@ export default function AgregarCliente() {
             })}
           </div>
         </div>
-
         <div className="flex gap-4">
           <button
             type="submit"

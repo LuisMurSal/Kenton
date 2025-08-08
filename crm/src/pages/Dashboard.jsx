@@ -1,46 +1,134 @@
+import { useEffect, useState } from 'react'
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { useNavigate } from 'react-router-dom'
-import { Users, User, Box, Send } from 'lucide-react'
+
+const COLORS = ['#4f772d', '#a3b18a', '#d9d9d9', '#82ca9d', '#8884d8']
 
 export default function Dashboard() {
-  return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6 text-[#4f772d]">Panel de Control</h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card title="Usuarios" link="/usuarios" description="Gestiona los usuarios del sistema" icon={<Users size={20} />} />
-        <Card title="Clientes" link="/clientes" description="Visualiza, agrega o edita clientes" icon={<User size={20} />} />
-        <Card title="Productos" link="/productos" description="Administra tu inventario de productos" icon={<Box size={20} />} />
-        <Card title="Enviar PDF" link="/pdf" description="Genera y envía productos en PDF por email" icon={<Send size={20} />} />
-
-        {/* Repetidos solo para ejemplo visual */}
-        <Card title="Usuarios" link="/usuarios" description="Gestiona los usuarios del sistema" icon={<Users size={20} />} />
-        <Card title="Clientes" link="/clientes" description="Visualiza, agrega o edita clientes" icon={<User size={20} />} />
-        <Card title="Productos" link="/productos" description="Administra tu inventario de productos" icon={<Box size={20} />} />
-        <Card title="Enviar PDF" link="/pdf" description="Genera y envía productos en PDF por email" icon={<Send size={20} />} />
-      </div>
-    </div>
-  )
-}
-
-function Card({ title, link, description, icon }) {
+  const [clientes, setClientes] = useState([])
+  const [productos, setProductos] = useState([])
   const navigate = useNavigate()
 
-  const handleClick = (e) => {
-    e.preventDefault()
-    navigate(link)
+  useEffect(() => {
+    const storedClientes = JSON.parse(localStorage.getItem('clientes')) || []
+    const storedProductos = JSON.parse(localStorage.getItem('productos')) || []
+
+    setClientes(storedClientes)
+    setProductos(storedProductos)
+  }, [])
+
+  // Clientes asignado cada producto
+  const contarClientesPorProducto = (productoId) => {
+    return clientes.filter(cliente => cliente.productos?.includes(productoId)).length
   }
 
+  // Pastel: cantidad total de asignaciones de productos
+  const dataGrafica = productos.map((producto) => ({
+    name: producto.nombre,
+    value: contarClientesPorProducto(producto.id),
+  })).filter(item => item.value > 0)
+
+  // Últimos 3 clientes agregados
+  const clientesRecientes = [...clientes]
+    .sort((a, b) => b.id - a.id)
+    .slice(0, 3)
+
   return (
-    <a
-      href={link}
-      onClick={handleClick}
-      className="block p-6 rounded-lg shadow hover:shadow-md hover:bg-gray-50 transition duration-200 border-gray-200 border bg-white cursor-pointer"
-    >
-      <div className="flex items-center justify-between mb-2">
-        <h2 className="text-xl font-semibold">{title}</h2>
-        <div className="text-gray-500">{icon}</div>
+    <div className="p-6 space-y-6">
+      <h1 className="text-3xl font-bold mb-6 text-[#4f772d]">Panel de Control</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Total clientes */}
+        <div className="p-6 rounded-lg shadow bg-white border border-gray-200">
+          <h2 className="text-xl font-semibold mb-2">Total Clientes</h2>
+          <p className="text-4xl font-bold text-[#4f772d]">{clientes.length}</p>
+        </div>
+
+        {/* Total productos */}
+        <div className="p-6 rounded-lg shadow bg-white border border-gray-200">
+          <h2 className="text-xl font-semibold mb-2">Total Productos</h2>
+          <p className="text-4xl font-bold text-[#4f772d]">{productos.length}</p>
+        </div>
+
+        {/* Clientes por producto */}
+        <div className="p-6 rounded-lg shadow bg-white border border-gray-200 max-h-[400px] overflow-y-auto">
+          <h2 className="text-xl font-semibold mb-4">Clientes por Producto</h2>
+          {productos.length === 0 ? (
+            <p className="text-gray-500">No hay productos almacenados.</p>
+          ) : (
+            <ul className="space-y-2 max-h-96 overflow-y-auto">
+              {productos.map(producto => (
+                <li key={producto.id} className="flex justify-between border-b border-gray-200 pb-1">
+                  <span>{producto.nombre}</span>
+                  <span className="font-bold">{contarClientesPorProducto(producto.id)}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
-      <p className="text-gray-600 text-sm">{description}</p>
-    </a>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+        {/* Clientes recientes */}
+        <div className="p-6 rounded-lg shadow bg-white border border-gray-200">
+          <h2 className="text-xl font-semibold mb-4">Clientes Recientes</h2>
+          {clientesRecientes.length === 0 ? (
+            <p className="text-gray-500">No hay clientes recientes.</p>
+          ) : (
+            <ul className="space-y-2">
+              {clientesRecientes.map(cliente => (
+                <li key={cliente.id} className="border-b border-gray-200 pb-1">
+                  <p className="font-medium">{cliente.nombre}</p>
+                  <p className="text-sm text-gray-600">{cliente.email}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* Grafica de distribución de productos por cliente */}
+        <div className="p-6 rounded-lg shadow bg-white border border-gray-200">
+          <h2 className="text-xl font-semibold mb-4">Distribución de Productos por Cliente</h2>
+          {dataGrafica.length === 0 ? (
+            <p className="text-gray-500">No hay datos para mostrar.</p>
+          ) : (
+            <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
+                <Pie
+                  data={dataGrafica}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  label
+                >
+                  {dataGrafica.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend verticalAlign="bottom" height={36} />
+              </PieChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+
+        <div className="p-6 rounded-lg shadow bg-white border border-gray-200 flex flex-col justify-center space-y-4">
+          <h2 className="text-xl font-semibold mb-4">Accesos Rápidos</h2>
+          <button
+            onClick={() => navigate('/productos')}
+            className="bg-[#4f772d] text-white py-2 rounded hover:bg-[#3d5a1f] transition"
+          >
+            Ver Productos
+          </button>
+          <button
+            onClick={() => navigate('/agregar-cliente')} 
+            className="bg-[#4f772d] text-white py-2 rounded hover:bg-[#3d5a1f] transition"
+          >
+            Agregar Cliente
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }
