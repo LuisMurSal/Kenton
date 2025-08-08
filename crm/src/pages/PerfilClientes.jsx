@@ -110,26 +110,30 @@ export default function PerfilCliente() {
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={handleGuardar}
-                className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] transition"
+                className="bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition
+                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Guardar cambios
               </button>
               <button
                 onClick={() => setMostrarConfirmacion(true)}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                className="bg-red-600 text-white rounded hover:bg-red-700 transition
+                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Eliminar
               </button>
               <button
                 onClick={() => setModoEdicion(false)}
-                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
+                className="bg-gray-400 text-white rounded hover:bg-gray-500 transition
+                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Cancelar edición
               </button>
             </div>
+
           </>
         ) : (
           <>
@@ -162,32 +166,36 @@ export default function PerfilCliente() {
               </ul>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => {}}
-                className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] transition"
+                className="bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition
+                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Descargar PDF
               </button>
               <button
                 onClick={() => setModoEdicion(true)}
-                className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] transition"
+                className="bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition
+                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Modificar
               </button>
               <button
                 onClick={handleRegresar}
-                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
+                className="bg-gray-400 text-white rounded hover:bg-gray-500 transition
+                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Regresar
               </button>
             </div>
+
           </>
         )}
       </div>
 
       {mostrarConfirmacion && (
-        <div className="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center z-50 transition-all duration-300">
+        <div className="fixed inset-0 backdrop-blur-sm bg-black/50 flex items-center justify-center z-50 transition-all duration-300">
           <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full transform scale-95 animate-fadeIn transition">
             <h2 className="text-xl font-semibold mb-4">¿Estás seguro de eliminar este cliente?</h2>
             <div className="flex justify-end gap-3">
