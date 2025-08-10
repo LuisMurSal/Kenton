@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Mail, User } from 'lucide-react'
+import { generarPDFPerfilCliente } from '../utils/pdfPerfilCliente';
 
 export default function PerfilCliente() {
   const { id } = useParams()
@@ -50,6 +51,12 @@ export default function PerfilCliente() {
       : [...form.productos, productoId]
     setForm({ ...form, productos: nuevos })
   }
+
+  const handleDescargarPDF = () => {
+  // Obtener productos completos del cliente (de la lista global productos)
+  const productosCliente = productos.filter(p => form.productos.includes(p.id));
+  generarPDFPerfilCliente(form, productosCliente);
+  };
 
   if (!form) return <p className="p-6 text-gray-600">Cliente no encontrado.</p>
 
@@ -168,7 +175,7 @@ export default function PerfilCliente() {
 
             <div className="flex flex-wrap gap-2">
               <button
-                onClick={() => {}}
+                onClick={handleDescargarPDF}
                 className="bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition
                            text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >

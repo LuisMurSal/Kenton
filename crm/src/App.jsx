@@ -1,6 +1,7 @@
 import { Outlet, Navigate } from 'react-router-dom'
 import { useState } from 'react'
 import './index.css'
+import './styles/pdfUtils.css' 
 import Sidebar from './components/Sidebar'
 
 export default function App() {

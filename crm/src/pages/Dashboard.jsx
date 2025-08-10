@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { useNavigate } from 'react-router-dom'
+import { generarPDFDashboardDatos } from "../utils/pdfUtils";
 
 const COLORS = ['#4f772d', '#a3b18a', '#d9d9d9', '#82ca9d', '#8884d8']
 
@@ -34,7 +35,7 @@ export default function Dashboard() {
     .slice(0, 3)
 
   return (
-    <div className="p-6 space-y-6">
+    <div id="dashboard-container" className="p-6 space-y-6">
       <h1 className="text-3xl font-bold mb-6 text-[#4f772d]">Panel de Control</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Total clientes */}
@@ -91,29 +92,31 @@ export default function Dashboard() {
           {dataGrafica.length === 0 ? (
             <p className="text-gray-500">No hay datos para mostrar.</p>
           ) : (
-            <ResponsiveContainer width="100%" height={250}>
-              <PieChart>
-                <Pie
-                  data={dataGrafica}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={80}
-                  label
-                >
-                  {dataGrafica.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend verticalAlign="bottom" height={36} />
-              </PieChart>
-            </ResponsiveContainer>
+            <div id="grafica-pastel" style={{ width: '100%', height: 250 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={dataGrafica}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    label
+                  >
+                    {dataGrafica.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend verticalAlign="bottom" height={36} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
           )}
         </div>
 
-        <div className="p-6 rounded-lg shadow bg-white border border-gray-200 flex flex-col justify-center space-y-4">
+        <div className="p-6 rounded-lg shadow bg-white border border-gray-200 flex flex-col space-y-4">
           <h2 className="text-xl font-semibold mb-4">Accesos Rápidos</h2>
           <button
             onClick={() => navigate('/productos')}
@@ -127,6 +130,12 @@ export default function Dashboard() {
           >
             Agregar Cliente
           </button>
+          <button
+          onClick={() => generarPDFDashboardDatos(clientes, productos)}
+          className="bg-[#4f772d] text-white py-2 rounded hover:bg-[#3d5a1f] transition"
+        >
+          Descargar PDF
+        </button>
         </div>
       </div>
     </div>
