@@ -203,7 +203,6 @@ export default function PerfilCliente() {
         )}
       </div>
 
-      {/* Modal Confirmación Eliminar */}
       {mostrarConfirmacionEliminar && (
         <div className="fixed inset-0 backdrop-blur-sm bg-black/50 flex items-center justify-center z-50 transition-all duration-300">
           <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full transform scale-95 animate-fadeIn transition">
@@ -226,7 +225,6 @@ export default function PerfilCliente() {
         </div>
       )}
 
-      {/* Modal Perfil Actualizado */}
       {mostrarConfirmacionGuardado && (
         <div className="fixed inset-0 backdrop-blur-sm bg-black/50 flex items-center justify-center z-50 transition-all duration-300">
           <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full transform scale-95 animate-fadeIn transition">
