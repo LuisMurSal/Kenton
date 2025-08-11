@@ -31,26 +31,33 @@ export const generarPDFDashboardDatos = async (clientes, productos) => {
     pdf.text(`Total Clientes: ${clientes.length}`, margin + cellPadding, margin + titleCellHeight + 12);
     pdf.text(`Total Productos: ${productos.length}`, margin + pageWidth / 2 + cellPadding, margin + titleCellHeight + 12);
 
+    // Altura dinámica para las dos celdas
+    const rowHeight = 7; // altura por cada fila
+    const clientesRecientesCount = Math.min(clientes.length, 3); // máximo 3 clientes recientes
+    const clientesPorProductoCount = productos.length;
+
+    // Calculamos altura máxima para ambas secciones
+    const dynamicCellHeight = Math.max(
+      clientesRecientesCount * rowHeight + 20, // 20 para el título y márgenes
+      clientesPorProductoCount * rowHeight + 20
+    );
+
     // Posiciones y tamaños de celdas para secciones
     const clientesCellY = margin + titleCellHeight + totalCellHeight + 5;
-    const clientesCellHeight = 45;
     const clientesCellWidth = pageWidth / 2 - 5;
     const clientesPorProdCellX = margin + pageWidth / 2 + 5;
     const clientesPorProdCellWidth = pageWidth / 2 - 5;
-    const clientesPorProdCellHeight = clientesCellHeight;
 
     // Celda Clientes Recientes
-    pdf.rect(margin, clientesCellY, clientesCellWidth, clientesCellHeight, "S");
+    pdf.rect(margin, clientesCellY, clientesCellWidth, dynamicCellHeight, "S");
     pdf.setFontSize(16);
     pdf.text("Clientes Recientes:", margin + cellPadding, clientesCellY + 10);
     pdf.setFontSize(12);
     let yPosClientesRecientes = clientesCellY + 20;
     const clientesRecientes = [...clientes].sort((a, b) => b.id - a.id).slice(0, 3);
     clientesRecientes.forEach(cliente => {
-      // Nombre a la izquierda
       pdf.text(`- ${cliente.nombre}`, margin + cellPadding + 2, yPosClientesRecientes);
 
-      // Email a la derecha
       const emailText = cliente.email;
       const emailTextWidth = pdf.getTextWidth(emailText);
       pdf.text(
@@ -61,14 +68,14 @@ export const generarPDFDashboardDatos = async (clientes, productos) => {
 
       // Línea separadora
       const lineY = yPosClientesRecientes + 2;
-      pdf.setDrawColor(156, 163, 175); // gris
+      pdf.setDrawColor(156, 163, 175);
       pdf.line(margin + cellPadding, lineY, margin + clientesCellWidth - cellPadding, lineY);
 
-      yPosClientesRecientes += 7;
+      yPosClientesRecientes += rowHeight;
     });
 
     // Celda Clientes por Producto
-    pdf.rect(clientesPorProdCellX, clientesCellY, clientesPorProdCellWidth, clientesPorProdCellHeight, "S");
+    pdf.rect(clientesPorProdCellX, clientesCellY, clientesPorProdCellWidth, dynamicCellHeight, "S");
     pdf.setFontSize(16);
     pdf.text("Clientes por Producto:", clientesPorProdCellX + cellPadding, clientesCellY + 10);
     pdf.setFontSize(12);
@@ -77,10 +84,8 @@ export const generarPDFDashboardDatos = async (clientes, productos) => {
     productos.forEach(producto => {
       const clientesCount = clientes.filter(cliente => cliente.productos?.includes(producto.id)).length;
 
-      // Nombre producto a la izquierda
       pdf.text(`- ${producto.nombre}`, clientesPorProdCellX + cellPadding + 2, yPosClientesPorProd);
 
-      // Conteo clientes a la derecha
       const countText = `${clientesCount}`;
       const countTextWidth = pdf.getTextWidth(countText);
       pdf.text(
@@ -91,14 +96,14 @@ export const generarPDFDashboardDatos = async (clientes, productos) => {
 
       // Línea separadora
       const lineY = yPosClientesPorProd + 2;
-      pdf.setDrawColor(156, 163, 175); // gris
+      pdf.setDrawColor(156, 163, 175);
       pdf.line(clientesPorProdCellX + cellPadding, lineY, clientesPorProdCellX + clientesPorProdCellWidth - cellPadding, lineY);
 
-      yPosClientesPorProd += 7;
+      yPosClientesPorProd += rowHeight;
     });
 
     // Celda gráfica abajo
-    const graficaCellY = clientesCellY + clientesCellHeight + 5;
+    const graficaCellY = clientesCellY + dynamicCellHeight + 5;
     const graficaCellWidth = pageWidth;
     const graficaCellHeight = 70;
     pdf.rect(margin, graficaCellY, graficaCellWidth, graficaCellHeight, "S");

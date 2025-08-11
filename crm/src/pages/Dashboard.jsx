@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recha
 import { useNavigate } from 'react-router-dom'
 import { generarPDFDashboardDatos } from "../utils/pdfUtils";
 
-const COLORS = ['#4f772d', '#a3b18a', '#d9d9d9', '#82ca9d', '#8884d8']
+const COLORS = ['#4f772d', '#31572c', '#132a13', '#90a955', '#ecf39e']
 
 export default function Dashboard() {
   const [clientes, setClientes] = useState([])

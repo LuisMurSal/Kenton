@@ -8,7 +8,7 @@ export const generarPDFPerfilCliente = (cliente, productosCliente) => {
     const cellPadding = 5;
 
     // Color gris tipo gray-400 para bordes
-    pdf.setDrawColor(156, 163, 175); // #9CA3AF
+    pdf.setDrawColor(156, 163, 175); 
 
     // Título: Perfil del Cliente
     const titleCellHeight = 15;

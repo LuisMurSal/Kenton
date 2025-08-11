@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Mail, User } from 'lucide-react'
-import { generarPDFPerfilCliente } from '../utils/pdfPerfilCliente';
+import { generarPDFPerfilCliente } from '../utils/pdfPerfilCliente'
 
 export default function PerfilCliente() {
   const { id } = useParams()
@@ -10,7 +10,8 @@ export default function PerfilCliente() {
   const [clientes, setClientes] = useState([])
   const [productos, setProductos] = useState([])
   const [form, setForm] = useState({ nombre: '', email: '', productos: [] })
-  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false)
+  const [mostrarConfirmacionEliminar, setMostrarConfirmacionEliminar] = useState(false)
+  const [mostrarConfirmacionGuardado, setMostrarConfirmacionGuardado] = useState(false)
   const [modoEdicion, setModoEdicion] = useState(false)
 
   useEffect(() => {
@@ -30,8 +31,12 @@ export default function PerfilCliente() {
     )
     setClientes(actualizados)
     localStorage.setItem('clientes', JSON.stringify(actualizados))
-    alert('Cliente actualizado')
     setModoEdicion(false)
+    setMostrarConfirmacionGuardado(true) // Mostrar modal guardado
+  }
+
+  const cerrarModalGuardado = () => {
+    setMostrarConfirmacionGuardado(false)
   }
 
   const handleEliminar = () => {
@@ -53,10 +58,9 @@ export default function PerfilCliente() {
   }
 
   const handleDescargarPDF = () => {
-  // Obtener productos completos del cliente (de la lista global productos)
-  const productosCliente = productos.filter(p => form.productos.includes(p.id));
-  generarPDFPerfilCliente(form, productosCliente);
-  };
+    const productosCliente = productos.filter(p => form.productos.includes(p.id))
+    generarPDFPerfilCliente(form, productosCliente)
+  }
 
   if (!form) return <p className="p-6 text-gray-600">Cliente no encontrado.</p>
 
@@ -107,7 +111,7 @@ export default function PerfilCliente() {
                       onClick={() => toggleProducto(producto.id)}
                       className={`px-3 py-1 rounded border text-sm font-medium transition
                         ${isSelected
-                          ? 'bg-green-600 text-white border-green-700'
+                          ? 'bg-[#4f772d] text-white border-[#31572c]'
                           : 'bg-white text-gray-800 border-gray-300 hover:bg-gray-100 cursor-pointer'}`}
                     >
                       {producto.nombre}
@@ -126,7 +130,7 @@ export default function PerfilCliente() {
                 Guardar cambios
               </button>
               <button
-                onClick={() => setMostrarConfirmacion(true)}
+                onClick={() => setMostrarConfirmacionEliminar(true)}
                 className="bg-red-600 text-white rounded hover:bg-red-700 transition
                            text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
@@ -140,7 +144,6 @@ export default function PerfilCliente() {
                 Cancelar edición
               </button>
             </div>
-
           </>
         ) : (
           <>
@@ -196,18 +199,18 @@ export default function PerfilCliente() {
                 Regresar
               </button>
             </div>
-
           </>
         )}
       </div>
 
-      {mostrarConfirmacion && (
+      {/* Modal Confirmación Eliminar */}
+      {mostrarConfirmacionEliminar && (
         <div className="fixed inset-0 backdrop-blur-sm bg-black/50 flex items-center justify-center z-50 transition-all duration-300">
           <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full transform scale-95 animate-fadeIn transition">
             <h2 className="text-xl font-semibold mb-4">¿Estás seguro de eliminar este cliente?</h2>
             <div className="flex justify-end gap-3">
               <button
-                onClick={() => setMostrarConfirmacion(false)}
+                onClick={() => setMostrarConfirmacionEliminar(false)}
                 className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition"
               >
                 Cancelar
@@ -217,6 +220,23 @@ export default function PerfilCliente() {
                 className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
               >
                 Sí, eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Perfil Actualizado */}
+      {mostrarConfirmacionGuardado && (
+        <div className="fixed inset-0 backdrop-blur-sm bg-black/50 flex items-center justify-center z-50 transition-all duration-300">
+          <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full transform scale-95 animate-fadeIn transition">
+            <h2 className="text-xl font-semibold mb-4">Perfil actualizado</h2>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={cerrarModalGuardado}
+                className="px-4 py-2 bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition"
+              >
+                Aceptar
               </button>
             </div>
           </div>
