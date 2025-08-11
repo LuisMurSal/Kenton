@@ -109,7 +109,6 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen
           </nav>
         </div>
 
-        {/* Botón cerrar sesión */}
         <div>
           <button
             onClick={handleLogout}
