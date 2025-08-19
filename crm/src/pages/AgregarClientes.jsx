@@ -86,14 +86,14 @@ export default function AgregarCliente() {
         <div className="flex gap-4">
           <button
             type="submit"
-            className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] cursor-pointer"
+            className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] cursor-pointer transition-colors duration-300 ease-in-out"
           >
             Guardar Cliente
           </button>
           <button
             type="button"
             onClick={() => navigate('/clientes')}
-            className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 cursor-pointer"
+            className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 cursor-pointer transition-colors duration-300 ease-in-out"
           >
             Cancelar
           </button>

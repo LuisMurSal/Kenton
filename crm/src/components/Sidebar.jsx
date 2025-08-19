@@ -1,20 +1,25 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { LogOut, Users, Box, LayoutDashboard, Menu, X, ChevronLeft, ChevronRight, Snail, UserPlus
+import { supabase } from '../services/supabase'
+import { LogOut, Users, Box, LayoutDashboard, Menu, X, ChevronLeft, ChevronRight, Snail, UserPlus, User
 } from 'lucide-react'
 
 export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen }) {
   const location = useLocation()
   const navigate = useNavigate()
   const [active, setActive] = useState(location.pathname)
+  const [closing, setClosing] = useState(false) // 👈 Estado para mostrar "Cerrando sesión..."
 
   useEffect(() => {
     setActive(location.pathname)
   }, [location.pathname])
 
-  const handleLogout = () => {
-    localStorage.removeItem('token')
-    navigate('/login')
+  const handleLogout = async () => {
+    setClosing(true) // 👈 activa el mensaje "Cerrando sesión..."
+    setTimeout(async () => {
+      await supabase.auth.signOut()
+      navigate('/login')
+    }, 1000) // 1 segundo de espera
   }
 
   const linkStyle = (path) =>
@@ -48,7 +53,6 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen
         `}
         style={{ width: isCollapsed ? '80px' : '256px' }}
       >
-        
         <div>
           {/* Botón cerrar (móvil) */}
           <div className="md:hidden flex justify-end mb-4">
@@ -68,7 +72,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen
             {isCollapsed ? (
               <button
                 onClick={() => setIsCollapsed(false)}
-                className="text-green-100 hover:text-white mx-auto"
+                className="text-green-100 hover:text-white mx-auto cursor-pointer"
               >
                 <ChevronRight className="w-6 h-6 transition-transform duration-300" />
               </button>
@@ -76,11 +80,11 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen
               <>
                 <div className="flex items-center space-x-2 mx-auto">
                   <Snail className="w-6 h-6 text-white" />
-                  <h1 className="text-white font-bold text-2xl">CRM Panel</h1>
+                  <h1 className="text-white font-bold text-2xl cursor-default">CRM Panel</h1>
                 </div>
                 <button
                   onClick={() => setIsCollapsed(true)}
-                  className="text-green-100 hover:text-white"
+                  className="text-green-100 hover:text-white cursor-pointer"
                 >
                   <ChevronLeft className="w-6 h-6 transition-transform duration-300" />
                 </button>
@@ -99,16 +103,21 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen
               {!isCollapsed && <span className="whitespace-nowrap">Clientes</span>}
             </Link>
             <Link to="/agregar-cliente" className={linkStyle('/agregar-cliente')} onClick={() => setIsOpen(false)}>
-              <UserPlus className="w-5 h-5 flex-shrink-0" /> {/* Cambia el ícono si prefieres otro */}
+              <UserPlus className="w-5 h-5 flex-shrink-0" />
               {!isCollapsed && <span className="whitespace-nowrap">Agregar Cliente</span>}
             </Link>
             <Link to="/productos" className={linkStyle('/productos')} onClick={() => setIsOpen(false)}>
               <Box className="w-5 h-5 flex-shrink-0" />
               {!isCollapsed && <span className="whitespace-nowrap">Productos</span>}
             </Link>
+            <Link to="/perfil" className={linkStyle('/perfil')} onClick={() => setIsOpen(false)}>
+              <User className="w-5 h-5 flex-shrink-0" />
+              {!isCollapsed && <span className="whitespace-nowrap">Mi Perfil</span>}
+            </Link>
           </nav>
         </div>
 
+        {/* Botón cerrar sesión */}
         <div>
           <button
             onClick={handleLogout}
@@ -119,7 +128,9 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen
           >
             <LogOut className="w-5 h-5" />
             {!isCollapsed && (
-              <span className="transition-opacity duration-300">Cerrar sesión</span>
+              <span className="transition-opacity duration-300">
+                {closing ? 'Cerrando sesión...' : 'Cerrar sesión'}
+              </span>
             )}
           </button>
         </div>

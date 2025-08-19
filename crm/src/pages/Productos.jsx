@@ -85,7 +85,7 @@ export default function Productos() {
 
       <button
         onClick={agregarProducto}
-        className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] mb-8 cursor-pointer"
+        className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] mb-8 cursor-pointer transition-colors duration-300 ease-in-out"
       >
         Agregar Producto
       </button>
@@ -103,16 +103,16 @@ export default function Productos() {
             <p className="text-sm text-gray-600">{producto.descripcion}</p>
             <p className="text-green-700 font-semibold mt-2">${producto.precio}</p>
 
-            <div className="mt-4 flex justify-between">
+            <div className="mt-4 flex justify-between ">
               <button
                 onClick={() => navigate(`/productos/${producto.id}`)}
-                className="px-3 py-1 text-sm bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition cursor-pointer"
+                className="px-3 py-1 text-sm bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] cursor-pointer transition-colors duration-300 ease-in-out "
               >
                 Ver Producto
               </button>
               <button
                 onClick={() => eliminarProducto(producto.id)}
-                className="px-3 py-1 text-sm bg-[#31572c] text-white rounded hover:bg-red-700 transition cursor-pointer"
+                className="px-3 py-1 text-sm bg-[#31572c] text-white rounded hover:bg-gray-400 cursor-pointer transition-colors duration-300 ease-in-out"
               >
                 Eliminar
               </button>
