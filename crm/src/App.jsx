@@ -11,34 +11,27 @@ export default function App() {
 
   if (!token) return <Navigate to="/login" />
 
-  const sidebarWidth = isCollapsed ? 80 : 256
-
   return (
-    <>
+    <div className="flex min-h-screen">
       <Sidebar
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-
-      {/* Overlay al abrir el sidebar en móviles */}
       {isOpen && (
-  <div
-    onClick={() => setIsOpen(false)}
-    className="fixed inset-0 backdrop-blur-sm bg-gray/10 z-30 md:hidden transition-opacity duration-300"
-  />
-)}
+        <div
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 backdrop-blur-sm bg-gray/10 z-30 md:hidden transition-opacity duration-300"
+        />
+      )}
 
-
-      <div
-        className={`min-h-screen bg-gray-100 p-4 transition-all duration-300`}
-        style={{
-          marginLeft: window.innerWidth >= 768 ? `${sidebarWidth}px` : '0px',
-        }}
+      <main
+        className={`flex-1 bg-gray-100 p-4 transition-all duration-300 
+                    ${isCollapsed ? 'md:ml-20' : 'md:ml-64'}`}
       >
         <Outlet />
-      </div>
-    </>
+      </main>
+    </div>
   )
 }
