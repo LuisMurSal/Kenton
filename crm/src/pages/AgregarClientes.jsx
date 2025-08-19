@@ -22,7 +22,7 @@ export default function AgregarCliente() {
     const updatedClientes = [...clientes, newCliente]
     setClientes(updatedClientes)
     localStorage.setItem('clientes', JSON.stringify(updatedClientes))
-    navigate('/clientes') // Volver a la lista
+    navigate('/clientes')
   }
 
   const toggleProducto = (id) => {

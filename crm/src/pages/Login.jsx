@@ -30,10 +30,7 @@ export default function Login() {
           setError('Ocurrió un error, intenta de nuevo')
         }
       } else if (data?.session) {
-        // 👇 Guardamos el token en sessionStorage
         sessionStorage.setItem('token', data.session.access_token)
-
-        // Redirigir al dashboard
         navigate('/')
       }
     } catch (err) {

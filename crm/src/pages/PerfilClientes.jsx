@@ -125,21 +125,21 @@ export default function PerfilCliente() {
               <button
                 onClick={handleGuardar}
                 className="bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition
-                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
+                            text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Guardar cambios
               </button>
               <button
                 onClick={() => setMostrarConfirmacionEliminar(true)}
                 className="bg-red-600 text-white rounded hover:bg-red-700 transition
-                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
+                            text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Eliminar
               </button>
               <button
                 onClick={() => setModoEdicion(false)}
                 className="bg-gray-400 text-white rounded hover:bg-gray-500 transition
-                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
+                            text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Cancelar edición
               </button>
@@ -180,21 +180,21 @@ export default function PerfilCliente() {
               <button
                 onClick={handleDescargarPDF}
                 className="bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition
-                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
+                            text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Descargar PDF
               </button>
               <button
                 onClick={() => setModoEdicion(true)}
                 className="bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition
-                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
+                            text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Modificar
               </button>
               <button
                 onClick={handleRegresar}
                 className="bg-gray-400 text-white rounded hover:bg-gray-500 transition
-                           text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
+                            text-sm sm:text-base px-2 py-1 sm:px-4 sm:py-2"
               >
                 Regresar
               </button>

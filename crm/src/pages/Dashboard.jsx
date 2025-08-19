@@ -29,7 +29,6 @@ export default function Dashboard() {
     value: contarClientesPorProducto(producto.id),
   })).filter(item => item.value > 0)
 
-  // Últimos 3 clientes agregados
   const clientesRecientes = [...clientes]
     .sort((a, b) => b.id - a.id)
     .slice(0, 3)
@@ -86,7 +85,6 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* Grafica de distribución de productos por cliente */}
         <div className="p-6 rounded-lg shadow bg-white border border-gray-200">
           <h2 className="text-xl font-semibold mb-4">Distribución de Productos por Cliente</h2>
           {dataGrafica.length === 0 ? (

@@ -114,7 +114,7 @@ export default function Perfil() {
           </div>
         </div>
 
-        {/* Teléfono */}
+        {/* Telefono */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
           <div className="flex items-center border-b-2 border-gray-300">
@@ -130,7 +130,7 @@ export default function Perfil() {
           </div>
         </div>
 
-        {/* Contraseña solo en edición */}
+        {/* Contraseña solo en edicion */}
         {isEditing && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Nueva contraseña</label>
@@ -157,7 +157,7 @@ export default function Perfil() {
           {!isEditing ? (
             <button
               type="button"
-              onClick={() => setModalOpen(true)} // Abrir modal al hacer clic
+              onClick={() => setModalOpen(true)} 
               className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] cursor-pointer transition-colors duration-200 ease-in-out"
             >
               Editar perfil
@@ -178,7 +178,7 @@ export default function Perfil() {
                   setIsEditing(false)
                   setError('')
                   setSuccess('')
-                  // resetear campos a los valores originales
+
                   supabase.auth.getUser().then(({ data: { user } }) => {
                     if (user) {
                       setUsuario({

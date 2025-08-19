@@ -8,18 +8,18 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen
   const location = useLocation()
   const navigate = useNavigate()
   const [active, setActive] = useState(location.pathname)
-  const [closing, setClosing] = useState(false) // 👈 Estado para mostrar "Cerrando sesión..."
+  const [closing, setClosing] = useState(false) 
 
   useEffect(() => {
     setActive(location.pathname)
   }, [location.pathname])
 
   const handleLogout = async () => {
-    setClosing(true) // 👈 activa el mensaje "Cerrando sesión..."
+    setClosing(true) 
     setTimeout(async () => {
       await supabase.auth.signOut()
       navigate('/login')
-    }, 1000) // 1 segundo de espera
+    }, 1000) 
   }
 
   const linkStyle = (path) =>
@@ -29,7 +29,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen
 
   return (
     <>
-      {/* Botón Hamburguesa */}
+      {/* Hamburguesa */}
       <button
         onClick={() => setIsOpen(true)}
         className={`
@@ -54,20 +54,18 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen
         style={{ width: isCollapsed ? '80px' : '256px' }}
       >
         <div>
-          {/* Botón cerrar (móvil) */}
+          {/* Boton cerrar (movil) */}
           <div className="md:hidden flex justify-end mb-4">
             <button onClick={() => setIsOpen(false)} className="text-green-100">
               <X />
             </button>
           </div>
 
-          {/* Logo en versión móvil centrado */}
           <div className="md:hidden flex flex-col items-center mb-6 w-full">
             <Snail className="w-6 h-6 text-white mb-1" />
             <h1 className="text-white font-bold text-xl">CRM Panel</h1>
           </div>
 
-          {/* Logo y botón colapsar (escritorio) */}
           <div className="hidden md:flex items-center justify-between mb-8">
             {isCollapsed ? (
               <button
@@ -117,7 +115,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed, isOpen, setIsOpen
           </nav>
         </div>
 
-        {/* Botón cerrar sesión */}
+        {/* Cerrar sesion */}
         <div>
           <button
             onClick={handleLogout}

@@ -25,7 +25,7 @@ export default function ModalPerfil({ isOpen, onConfirm, onCancel, mensaje }) {
           show ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
         }`}
       >
-        {/* Botón cerrar */}
+        {/* Boton cerrar */}
         <button
           onClick={onCancel}
           className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-all duration-300 ease-in-out cursor-pointer"
@@ -36,7 +36,7 @@ export default function ModalPerfil({ isOpen, onConfirm, onCancel, mensaje }) {
         {/* Mensaje */}
         <p className="text-gray-800 mb-6">{mensaje}</p>
 
-        {/* Botones de acción */}
+        {/* Botones de accion */}
         <div className="flex justify-end gap-4">
           <button
             onClick={onCancel}
