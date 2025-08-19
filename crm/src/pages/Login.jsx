@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Mail, Lock } from 'lucide-react'
+import { supabase } from '../services/supabase' // importa tu cliente supabase
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -8,14 +9,33 @@ export default function Login() {
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  // Cambiar a false cuando quieras usar Supabase Auth
+  const USE_DUMMY_AUTH = true
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (email === 'admin@admin.com' && password === '123456') {
-      sessionStorage.setItem('token', 'token-falso')
-      navigate('/')
+    if (USE_DUMMY_AUTH) {
+      // Login manual temporal
+      if (email === 'admin@admin.com' && password === '123456') {
+        sessionStorage.setItem('token', 'token-falso')
+        navigate('/')
+      } else {
+        setError('Correo o contraseña incorrectos')
+      }
     } else {
-      setError('Correo o contraseña incorrectos')
+      // Login con Supabase Auth
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      })
+
+      if (error) {
+        setError(error.message)
+      } else {
+        sessionStorage.setItem('token', data.session.access_token)
+        navigate('/')
+      }
     }
   }
 
@@ -73,7 +93,7 @@ export default function Login() {
 
       {/* Footer fijo al final */}
       <footer className="text-center p-4 text-[#3a5a40] bg-white">
-        © 2025 Poyecto CRM
+        © 2025 Proyecto CRM
       </footer>
     </div>
   )

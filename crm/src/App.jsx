@@ -7,7 +7,7 @@ import Sidebar from './components/Sidebar'
 export default function App() {
   const token = sessionStorage.getItem('token')
   const [isCollapsed, setIsCollapsed] = useState(false)
-  const [isOpen, setIsOpen] = useState(false) // <--- estado para abrir/cerrar el sidebar en móvil
+  const [isOpen, setIsOpen] = useState(false)
 
   if (!token) return <Navigate to="/login" />
 

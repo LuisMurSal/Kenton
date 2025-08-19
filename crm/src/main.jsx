@@ -6,7 +6,8 @@ import Dashboard from './pages/Dashboard.jsx'
 import Clientes from './pages/Clientes.jsx'
 import Productos from './pages/Productos.jsx'
 import PerfilCliente from './pages/PerfilClientes.jsx'
-import AgregarCliente from './pages/AgregarClientes.jsx'  // 👈 Agrega esto
+import AgregarCliente from './pages/AgregarClientes.jsx'
+import PerfilProducto from './pages/PerfilProducto.jsx'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="clientes/:id" element={<PerfilCliente />} />
         <Route path="productos" element={<Productos />} />
         <Route path="agregar-cliente" element={<AgregarCliente />} />
+        <Route path="productos/:id" element={<PerfilProducto />} />
       </Route>
       <Route path="/login" element={<Login />} />
     </Routes>

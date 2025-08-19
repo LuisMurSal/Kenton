@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Tag, FileText, DollarSign, Image } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Productos() {
   const [productos, setProductos] = useState([])
   const [nuevo, setNuevo] = useState({ nombre: '', descripcion: '', precio: '', imagen: '' })
-  const [editando, setEditando] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const storedProductos = JSON.parse(localStorage.getItem('productos')) || []
@@ -28,17 +29,6 @@ export default function Productos() {
 
   const eliminarProducto = (id) => {
     setProductos(productos.filter(p => p.id !== id))
-  }
-
-  const editarProducto = (producto) => {
-    setNuevo(producto)
-    setEditando(producto.id)
-  }
-
-  const guardarEdicion = () => {
-    setProductos(productos.map(p => p.id === editando ? { ...nuevo, id: editando } : p))
-    setEditando(null)
-    setNuevo({ nombre: '', descripcion: '', precio: '', imagen: '' })
   }
 
   return (
@@ -94,10 +84,10 @@ export default function Productos() {
       </div>
 
       <button
-        onClick={editando ? guardarEdicion : agregarProducto}
+        onClick={agregarProducto}
         className="bg-[#4f772d] text-white px-4 py-2 rounded hover:bg-[#3d5a1f] mb-8 cursor-pointer"
       >
-        {editando ? 'Guardar Cambios' : 'Agregar Producto'}
+        Agregar Producto
       </button>
 
       {/* Tarjetas */}
@@ -115,10 +105,10 @@ export default function Productos() {
 
             <div className="mt-4 flex justify-between">
               <button
-                onClick={() => editarProducto(producto)}
+                onClick={() => navigate(`/productos/${producto.id}`)}
                 className="px-3 py-1 text-sm bg-[#4f772d] text-white rounded hover:bg-[#3d5a1f] transition cursor-pointer"
               >
-                Editar
+                Ver Producto
               </button>
               <button
                 onClick={() => eliminarProducto(producto.id)}
